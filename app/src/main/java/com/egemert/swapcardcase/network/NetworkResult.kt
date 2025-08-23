@@ -1,4 +1,4 @@
-package com.egemert.swapcardcase.network.util
+package com.egemert.swapcardcase.network
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -7,9 +7,9 @@ import retrofit2.Response
 import java.io.IOException
 
 sealed class NetworkResult<out T> {
-    data class Success<out T>(val data: T) : NetworkResult<T>() 
+    data class Success<out T>(val data: T) : NetworkResult<T>()
     data class Error(val message: String, val code: Int? = null) : NetworkResult<Nothing>()
-    object Loading : NetworkResult<Nothing>() 
+    object Loading : NetworkResult<Nothing>()
 }
 
 suspend fun <T> safeApiCall(apiCall: suspend () -> Response<T>): Flow<NetworkResult<T>> = flow {

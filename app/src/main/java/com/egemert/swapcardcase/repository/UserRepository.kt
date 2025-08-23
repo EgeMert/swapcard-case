@@ -1,9 +1,9 @@
 package com.egemert.swapcardcase.network.repository
 
-import com.egemert.swapcardcase.network.api.ApiService
+import com.egemert.swapcardcase.network.ApiService
 import com.egemert.swapcardcase.network.model.User
-import com.egemert.swapcardcase.network.util.NetworkResult
-import com.egemert.swapcardcase.network.util.safeApiCall
+import com.egemert.swapcardcase.network.NetworkResult
+import com.egemert.swapcardcase.network.safeApiCall
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject

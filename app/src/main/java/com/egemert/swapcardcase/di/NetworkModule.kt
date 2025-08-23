@@ -1,7 +1,7 @@
-package com.egemert.swapcardcase.network.di
+package com.egemert.swapcardcase.di
 
-import com.egemert.swapcardcase.network.interceptor.NetworkConnectionInterceptor
-import com.egemert.swapcardcase.network.util.Constants
+import com.egemert.swapcardcase.network.NetworkConnectionInterceptor
+import com.egemert.swapcardcase.network.Constants
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module

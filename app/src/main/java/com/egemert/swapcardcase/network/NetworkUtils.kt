@@ -1,4 +1,4 @@
-package com.egemert.swapcardcase.network.util
+package com.egemert.swapcardcase.network
 
 import android.content.Context
 import android.net.ConnectivityManager

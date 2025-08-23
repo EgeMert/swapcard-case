@@ -1,8 +1,7 @@
-package com.egemert.swapcardcase.network.interceptor
+package com.egemert.swapcardcase.network
 
 import android.content.Context
 import com.egemert.swapcardcase.R
-import com.egemert.swapcardcase.network.util.NetworkUtils
 import okhttp3.Interceptor
 import okhttp3.Response
 import java.io.IOException

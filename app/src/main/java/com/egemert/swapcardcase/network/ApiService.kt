@@ -1,4 +1,4 @@
-package com.egemert.swapcardcase.network.api
+package com.egemert.swapcardcase.network
 
 import com.egemert.swapcardcase.network.model.UserResponse
 import retrofit2.Response

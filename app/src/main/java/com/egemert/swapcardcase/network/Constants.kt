@@ -1,4 +1,4 @@
-package com.egemert.swapcardcase.network.util
+package com.egemert.swapcardcase.network
 
 object Constants {
     const val BASE_URL = "https://randomuser.me/" // Random User API base URL
