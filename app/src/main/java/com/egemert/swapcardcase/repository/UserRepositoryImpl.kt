@@ -1,0 +1,18 @@
+package com.egemert.swapcardcase.repository
+
+import com.egemert.swapcardcase.network.ApiResult
+import com.egemert.swapcardcase.network.ApiService
+import com.egemert.swapcardcase.network.handleApi
+import com.egemert.swapcardcase.network.model.UserResponse
+import javax.inject.Inject
+
+class UserRepositoryImpl @Inject constructor(
+    private val apiService: ApiService
+) : UserRepository {
+
+    override suspend fun getUsers(page: Int, results: Int): ApiResult<UserResponse> =
+        handleApi {
+            apiService.getUsers(page = page, results = results)
+        }
+
+}
