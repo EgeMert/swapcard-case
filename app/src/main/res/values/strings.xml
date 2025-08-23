@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">SwapCardCase</string>
+    <string name="error_no_internet_connection">No internet connection. Please check your network and try again.</string>
 </resources>
