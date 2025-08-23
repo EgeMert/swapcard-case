@@ -6,6 +6,6 @@ import com.egemert.swapcardcase.network.model.UserResponse
 interface UserRepository {
     suspend fun getUsers(
         page: Int = 1,
-        results: Int = 10
+        results: Int = 25
     ): ApiResult<UserResponse>
 }
