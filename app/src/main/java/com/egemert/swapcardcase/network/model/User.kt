@@ -3,77 +3,77 @@ package com.egemert.swapcardcase.network.model
 import com.google.gson.annotations.SerializedName
 
 data class User(
-    @SerializedName("gender") val gender: String,
-    @SerializedName("name") val name: Name,
-    @SerializedName("location") val location: Location,
-    @SerializedName("email") val email: String,
-    @SerializedName("login") val login: Login,
-    @SerializedName("dob") val dob: DateOfBirth,
-    @SerializedName("registered") val registered: Registered,
-    @SerializedName("phone") val phone: String,
-    @SerializedName("cell") val cell: String,
-    @SerializedName("id") val id: Id,
-    @SerializedName("picture") val picture: Picture,
-    @SerializedName("nat") val nationality: String
+    @SerializedName("gender") val gender: String? = null,
+    @SerializedName("name") val name: Name? = null,
+    @SerializedName("location") val location: Location? = null,
+    @SerializedName("email") val email: String? = null,
+    @SerializedName("login") val login: Login? = null,
+    @SerializedName("dob") val dob: DateOfBirth? = null,
+    @SerializedName("registered") val registered: Registered? = null,
+    @SerializedName("phone") val phone: String? = null,
+    @SerializedName("cell") val cell: String? = null,
+    @SerializedName("id") val id: Id? = null,
+    @SerializedName("picture") val picture: Picture? = null,
+    @SerializedName("nat") val nationality: String? = null
 )
 
 data class Name(
-    @SerializedName("title") val title: String,
-    @SerializedName("first") val first: String,
-    @SerializedName("last") val last: String
+    @SerializedName("title") val title: String? = null,
+    @SerializedName("first") val first: String? = null,
+    @SerializedName("last") val last: String? = null
 )
 
 data class Location(
-    @SerializedName("street") val street: Street,
-    @SerializedName("city") val city: String,
-    @SerializedName("state") val state: String,
-    @SerializedName("country") val country: String,
-    @SerializedName("coordinates") val coordinates: Coordinates,
-    @SerializedName("timezone") val timezone: Timezone
+    @SerializedName("street") val street: Street? = null,
+    @SerializedName("city") val city: String? = null,
+    @SerializedName("state") val state: String? = null,
+    @SerializedName("country") val country: String? = null,
+    @SerializedName("coordinates") val coordinates: Coordinates? = null,
+    @SerializedName("timezone") val timezone: Timezone? = null
 )
 
 data class Street(
-    @SerializedName("number") val number: Int,
-    @SerializedName("name") val name: String
+    @SerializedName("number") val number: Int? = null,
+    @SerializedName("name") val name: String? = null
 )
 
 data class Coordinates(
-    @SerializedName("latitude") val latitude: String,
-    @SerializedName("longitude") val longitude: String
+    @SerializedName("latitude") val latitude: String? = null,
+    @SerializedName("longitude") val longitude: String? = null
 )
 
 data class Timezone(
-    @SerializedName("offset") val offset: String,
-    @SerializedName("description") val description: String
+    @SerializedName("offset") val offset: String? = null,
+    @SerializedName("description") val description: String? = null
 )
 
 data class Login(
-    @SerializedName("uuid") val uuid: String,
-    @SerializedName("username") val username: String,
-    @SerializedName("password") val password: String,
-    @SerializedName("salt") val salt: String,
-    @SerializedName("md5") val md5: String,
-    @SerializedName("sha1") val sha1: String,
-    @SerializedName("sha256") val sha256: String
+    @SerializedName("uuid") val uuid: String? = null,
+    @SerializedName("username") val username: String? = null,
+    @SerializedName("password") val password: String? = null,
+    @SerializedName("salt") val salt: String? = null,
+    @SerializedName("md5") val md5: String? = null,
+    @SerializedName("sha1") val sha1: String? = null,
+    @SerializedName("sha256") val sha256: String? = null
 )
 
 data class DateOfBirth(
-    @SerializedName("date") val date: String,
-    @SerializedName("age") val age: Int
+    @SerializedName("date") val date: String? = null,
+    @SerializedName("age") val age: Int? = null
 )
 
 data class Registered(
-    @SerializedName("date") val date: String,
-    @SerializedName("age") val age: Int
+    @SerializedName("date") val date: String? = null,
+    @SerializedName("age") val age: Int? = null
 )
 
 data class Id(
-    @SerializedName("name") val name: String,
-    @SerializedName("value") val value: String
+    @SerializedName("name") val name: String? = null,
+    @SerializedName("value") val value: String? = null
 )
 
 data class Picture(
-    @SerializedName("large") val large: String,
-    @SerializedName("medium") val medium: String,
-    @SerializedName("thumbnail") val thumbnail: String
+    @SerializedName("large") val large: String? = null,
+    @SerializedName("medium") val medium: String? = null,
+    @SerializedName("thumbnail") val thumbnail: String? = null
 )

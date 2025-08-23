@@ -13,19 +13,23 @@ import javax.inject.Singleton
 class UserRepository @Inject constructor(
     private val apiService: ApiService
 ) {
-    
+
     suspend fun getUsers(page: Int = 1, results: Int = 10): Flow<NetworkResult<List<User>>> {
         return flow {
-            safeApiCall { 
-                apiService.getUsers(page, results) 
+            safeApiCall {
+                apiService.getUsers(page, results)
             }.collect { result ->
                 when (result) {
                     is NetworkResult.Success -> {
-                        emit(NetworkResult.Success(result.data.results))
+                        result.data.results?.let { results ->
+                            emit(NetworkResult.Success(results))
+                        }
                     }
+
                     is NetworkResult.Error -> {
                         emit(NetworkResult.Error(result.message, result.code))
                     }
+
                     is NetworkResult.Loading -> {
                         emit(NetworkResult.Loading)
                     }

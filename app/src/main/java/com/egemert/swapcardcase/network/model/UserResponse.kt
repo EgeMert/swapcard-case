@@ -4,18 +4,18 @@ import com.google.gson.annotations.SerializedName
 
 data class UserResponse(
     @SerializedName("results")
-    val results: List<User>,
+    val results: List<User>? = null,
     @SerializedName("info")
-    val info: Info
+    val info: Info? = null
 )
 
 data class Info(
     @SerializedName("seed")
-    val seed: String,
+    val seed: String? = null,
     @SerializedName("results")
-    val results: Int,
+    val results: Int? = null,
     @SerializedName("page")
-    val page: Int,
+    val page: Int? = null,
     @SerializedName("version")
-    val version: String
+    val version: String? = null
 )
