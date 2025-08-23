@@ -32,7 +32,9 @@ fun UserListScreen(modifier: Modifier = Modifier) {
     }
 
     Box(
-        modifier = Modifier.fillMaxSize().padding(24.dp),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(24.dp),
         contentAlignment = Alignment.Center
     ) {
         when (val state = userListState) {
@@ -49,7 +51,13 @@ fun UserListScreen(modifier: Modifier = Modifier) {
                         verticalArrangement = Arrangement.spacedBy(8.dp),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        items(state.users) { user ->
+                        items(
+                            items = state.users,
+                            key = { user ->
+                                user.login?.uuid
+                                    ?: (user.name?.title + user.name?.first + user.name?.last)
+                            }
+                        ) { user ->
                             Text(
                                 text = user.email ?: "No email",
                                 style = MaterialTheme.typography.bodyLarge,
