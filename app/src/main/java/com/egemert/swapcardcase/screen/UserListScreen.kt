@@ -2,17 +2,20 @@ package com.egemert.swapcardcase.screen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
@@ -26,9 +29,21 @@ import com.egemert.swapcardcase.viewmodel.UserListViewModel
 fun UserListScreen(modifier: Modifier = Modifier) {
     val userListViewModel: UserListViewModel = hiltViewModel()
     val userListState by userListViewModel.userListState.collectAsStateWithLifecycle()
+    val lazyListState = rememberLazyListState()
 
-    LaunchedEffect(Unit) {
-        userListViewModel.getUserList()
+    // Load more items when scrolled to bottom
+    LaunchedEffect(lazyListState) {
+        snapshotFlow { lazyListState.layoutInfo.visibleItemsInfo }
+            .collect { visibleItems ->
+                if (visibleItems.isNotEmpty()) {
+                    val lastVisibleItemIndex = visibleItems.last().index
+                    val totalItems = lazyListState.layoutInfo.totalItemsCount
+
+                    if (lastVisibleItemIndex >= totalItems - 3) {
+                        userListViewModel.getUsers()
+                    }
+                }
+            }
     }
 
     Box(
@@ -47,6 +62,7 @@ fun UserListScreen(modifier: Modifier = Modifier) {
                     Text("No users found")
                 } else {
                     LazyColumn(
+                        state = lazyListState,
                         modifier = Modifier.fillMaxSize(),
                         verticalArrangement = Arrangement.spacedBy(8.dp),
                         horizontalAlignment = Alignment.CenterHorizontally
@@ -66,6 +82,21 @@ fun UserListScreen(modifier: Modifier = Modifier) {
                                     .fillParentMaxWidth(),
                                 textAlign = TextAlign.Center
                             )
+                        }
+
+                        item {
+                            if (state.isLoadingMore) {
+                                Box(
+                                    modifier = Modifier
+                                        .fillParentMaxWidth()
+                                        .padding(16.dp),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    CircularProgressIndicator()
+                                }
+                            } else {
+                                Spacer(modifier = Modifier.height(8.dp))
+                            }
                         }
                     }
                 }

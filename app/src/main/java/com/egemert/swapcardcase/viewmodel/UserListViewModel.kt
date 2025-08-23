@@ -10,6 +10,7 @@ import com.egemert.swapcardcase.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -17,36 +18,67 @@ import javax.inject.Inject
 class UserListViewModel @Inject constructor(
     private val userRepository: UserRepository
 ) : ViewModel() {
-    private val _userListState: MutableStateFlow<UserListUiState> =
-        MutableStateFlow(UserListUiState.Initial)
-    val userListState: StateFlow<UserListUiState?> get() = _userListState
+    private val _userListState = MutableStateFlow<UserListUiState>(UserListUiState.Initial)
+    val userListState: StateFlow<UserListUiState> = _userListState.asStateFlow()
 
-    fun getUserList() {
+    private var currentPage = 1
+    private var isLoading = false
+    private var isLastPage = false
+
+    init {
+        getUsers()
+    }
+
+    fun getUsers() {
+        if (isLoading || isLastPage) return
+
         viewModelScope.launch {
-            _userListState.emit(UserListUiState.Loading)
-            userRepository.getUsers().onSuccess { result ->
-                if (result.results == null) {
-                    _userListState.emit(UserListUiState.Initial)
-                    return@onSuccess
+            try {
+                isLoading = true
+
+                if (currentPage == 1) {
+                    _userListState.emit(UserListUiState.Loading)
                 } else {
-                    _userListState.emit(UserListUiState.Success(result.results))
+                    val currentUsers =
+                        (_userListState.value as? UserListUiState.Success)?.users ?: emptyList()
+                    _userListState.emit(UserListUiState.Success(currentUsers, isLoadingMore = true))
                 }
 
-            }.onError { message ->
-                _userListState.emit(UserListUiState.Error(message))
-            }.onException { e ->
-                _userListState.emit(UserListUiState.Exception(e))
+                val result = userRepository.getUsers(page = currentPage)
+
+                result.onSuccess { response ->
+                    val currentUsers =
+                        (_userListState.value as? UserListUiState.Success)?.users?.toMutableList()
+                            ?: mutableListOf()
+                    val newUsers = response.results ?: emptyList()
+
+                    isLastPage = newUsers.isEmpty()
+
+                    if (newUsers.isNotEmpty()) {
+                        currentUsers.addAll(newUsers)
+                        _userListState.emit(UserListUiState.Success(currentUsers))
+                        currentPage++
+                    } else if (currentPage == 1) {
+                        _userListState.emit(UserListUiState.Success(emptyList()))
+                    }
+                }.onError { message ->
+                    _userListState.emit(UserListUiState.Error(message))
+                }.onException { e ->
+                    _userListState.emit(UserListUiState.Exception(e))
+                }
+            } finally {
+                isLoading = false
             }
         }
     }
 }
 
 sealed class UserListUiState {
-    data object Loading : UserListUiState()
     data object Initial : UserListUiState()
-    data class Success(val users: List<User>) : UserListUiState()
+    data object Loading : UserListUiState()
+    data class Success(val users: List<User>, val isLoadingMore: Boolean = false) :
+        UserListUiState()
+
     data class Error(val message: String?) : UserListUiState()
-    class Exception(
-        val throwable: Throwable,
-    ) : UserListUiState()
+    data class Exception(val throwable: Throwable) : UserListUiState()
 }
