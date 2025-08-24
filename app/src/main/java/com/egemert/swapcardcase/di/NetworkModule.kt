@@ -5,8 +5,8 @@ import android.content.Context
 import com.egemert.swapcardcase.network.ApiService
 import com.egemert.swapcardcase.network.NetworkConnectionInterceptor
 import com.egemert.swapcardcase.network.Constants
-import com.egemert.swapcardcase.repository.UserRepository
-import com.egemert.swapcardcase.repository.UserRepositoryImpl
+import com.egemert.swapcardcase.domain.repository.UserRepository
+import com.egemert.swapcardcase.domain.repository.UserRepositoryImpl
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module

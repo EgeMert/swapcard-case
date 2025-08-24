@@ -6,7 +6,7 @@ import com.egemert.swapcardcase.data.response.User
 import com.egemert.swapcardcase.network.onError
 import com.egemert.swapcardcase.network.onException
 import com.egemert.swapcardcase.network.onSuccess
-import com.egemert.swapcardcase.repository.UserRepository
+import com.egemert.swapcardcase.domain.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
