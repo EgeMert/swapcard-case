@@ -8,7 +8,7 @@ class RouterImpl(
 ) : Router {
 
     override fun goToBookmarkScreen() {
-        navigate(Screens.Bookmark, removeFromHistory = true, singleTop = true)
+        navigate(Screens.Bookmark, removeFromHistory = false, singleTop = true)
     }
 
 
