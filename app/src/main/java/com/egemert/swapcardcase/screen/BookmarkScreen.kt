@@ -27,13 +27,13 @@ fun BookmarkScreen(
 
     val viewModel: BookmarkViewModel = hiltViewModel()
     val bookmarkState by viewModel.bookmarkState.collectAsState()
-    
+
     Scaffold(
         topBar = {
             TopAppBar(
                 title = { Text("Bookmarks") },
                 navigationIcon = {
-                    IconButton(onClick = { }) {
+                    IconButton(onClick = { router.popBackStack() }) {
                         Icon(
                             imageVector = Icons.Default.ArrowBack,
                             contentDescription = "Back"
@@ -54,6 +54,7 @@ fun BookmarkScreen(
                     CircularProgressIndicator()
                 }
             }
+
             is BookmarkUiState.Success -> {
                 if (state.users.isEmpty()) {
                     EmptyBookmarks(
@@ -67,12 +68,14 @@ fun BookmarkScreen(
                     )
                 }
             }
+
             is BookmarkUiState.Error -> {
                 ErrorState(
                     message = state.message,
                     modifier = Modifier.padding(padding)
                 )
             }
+
             BookmarkUiState.Empty -> {
                 EmptyBookmarks(
                     modifier = Modifier.padding(padding)

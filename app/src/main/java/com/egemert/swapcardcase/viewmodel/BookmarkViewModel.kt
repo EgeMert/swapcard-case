@@ -31,7 +31,7 @@ class BookmarkViewModel @Inject constructor(
         loadBookmarkedUsers()
     }
 
-    fun loadBookmarkedUsers() {
+    private fun loadBookmarkedUsers() {
         viewModelScope.launch {
             try {
                 userRepository.getBookmarkedUsers().collectLatest { users ->

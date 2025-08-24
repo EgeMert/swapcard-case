@@ -11,6 +11,9 @@ class RouterImpl(
         navigate(Screens.Bookmark, removeFromHistory = false, singleTop = true)
     }
 
+    override fun popBackStack() {
+        navHostController.popBackStack()
+    }
 
     private fun navigate(
         screen: Screens,

@@ -52,6 +52,11 @@ fun UserListScreen(
     val userListState by userListViewModel.userListState.collectAsStateWithLifecycle()
     val lazyListState = rememberLazyListState()
 
+    // Refresh bookmarked users when the screen becomes visible
+    LaunchedEffect(Unit) {
+        userListViewModel.loadBookmarkedUsers()
+    }
+
     val pullToRefreshState = rememberPullToRefreshState()
 
     LaunchedEffect(pullToRefreshState.isRefreshing) {
