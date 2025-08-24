@@ -38,10 +38,10 @@ suspend fun <T : Any> handleApi(
         if (response.isSuccessful && body != null) {
             ApiSuccess(body)
         } else {
-            ApiError(code = response.code(), message = response.message())
+            ApiError(message = response.message())
         }
     } catch (e: HttpException) {
-        ApiError(code = e.code(), message = e.message())
+        ApiError(message = e.message())
     } catch (e: Throwable) {
         ApiException(e)
     }

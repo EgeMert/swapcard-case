@@ -18,7 +18,7 @@ import javax.inject.Inject
 class UserListViewModel @Inject constructor(
     private val userRepository: UserRepository
 ) : ViewModel() {
-    private val _userListState = MutableStateFlow<UserListUiState>(UserListUiState.Initial)
+    private val _userListState = MutableStateFlow<UserListUiState>(UserListUiState.Loading)
     val userListState: StateFlow<UserListUiState> = _userListState.asStateFlow()
 
     private var currentPage = 1
@@ -74,7 +74,6 @@ class UserListViewModel @Inject constructor(
 }
 
 sealed class UserListUiState {
-    data object Initial : UserListUiState()
     data object Loading : UserListUiState()
     data class Success(val users: List<User>, val isLoadingMore: Boolean = false) :
         UserListUiState()

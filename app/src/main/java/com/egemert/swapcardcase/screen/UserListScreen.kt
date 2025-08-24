@@ -111,7 +111,6 @@ fun UserListScreen(modifier: Modifier = Modifier) {
                 )
             }
 
-            UserListUiState.Initial -> {}
             else -> {}
         }
     }
