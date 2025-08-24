@@ -70,7 +70,6 @@ class UserListViewModel @Inject constructor(
             } else {
                 userRepository.addBookmark(user)
             }
-            loadBookmarkedUsers()
         }
     }
 
