@@ -147,7 +147,7 @@ fun UserListScreen(
                                         userListViewModel.toggleBookmark(user)
                                     },
                                     isBookmarked = remember(user.login?.uuid) {
-                                        runBlocking { userListViewModel.isBookmarked(user.login?.uuid.orEmpty()) }
+                                        userListViewModel.isBookmarked(user.login?.uuid.orEmpty())
                                     }
                                 )
                             }
