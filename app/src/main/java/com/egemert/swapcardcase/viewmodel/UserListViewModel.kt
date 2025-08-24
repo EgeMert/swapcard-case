@@ -2,7 +2,7 @@ package com.egemert.swapcardcase.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.egemert.swapcardcase.network.model.User
+import com.egemert.swapcardcase.data.response.User
 import com.egemert.swapcardcase.network.onError
 import com.egemert.swapcardcase.network.onException
 import com.egemert.swapcardcase.network.onSuccess

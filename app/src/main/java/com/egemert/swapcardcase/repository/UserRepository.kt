@@ -1,7 +1,7 @@
 package com.egemert.swapcardcase.repository
 
 import com.egemert.swapcardcase.network.ApiResult
-import com.egemert.swapcardcase.network.model.UserResponse
+import com.egemert.swapcardcase.data.response.UserResponse
 
 interface UserRepository {
     suspend fun getUsers(

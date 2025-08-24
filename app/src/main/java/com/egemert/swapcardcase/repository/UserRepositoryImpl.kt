@@ -3,7 +3,7 @@ package com.egemert.swapcardcase.repository
 import com.egemert.swapcardcase.network.ApiResult
 import com.egemert.swapcardcase.network.ApiService
 import com.egemert.swapcardcase.network.handleApi
-import com.egemert.swapcardcase.network.model.UserResponse
+import com.egemert.swapcardcase.data.response.UserResponse
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(

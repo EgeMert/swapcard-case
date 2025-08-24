@@ -1,6 +1,6 @@
 package com.egemert.swapcardcase.network
 
-import com.egemert.swapcardcase.network.model.UserResponse
+import com.egemert.swapcardcase.data.response.UserResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query

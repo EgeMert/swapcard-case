@@ -1,4 +1,4 @@
-package com.egemert.swapcardcase.network.model
+package com.egemert.swapcardcase.data.response
 
 import com.google.gson.annotations.SerializedName
 
