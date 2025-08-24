@@ -10,14 +10,18 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.pulltorefresh.PullToRefreshContainer
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -25,13 +29,22 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.egemert.swapcardcase.viewmodel.UserListUiState
 import com.egemert.swapcardcase.viewmodel.UserListViewModel
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun UserListScreen(modifier: Modifier = Modifier) {
     val userListViewModel: UserListViewModel = hiltViewModel()
     val userListState by userListViewModel.userListState.collectAsStateWithLifecycle()
     val lazyListState = rememberLazyListState()
 
-    // Load more items when scrolled to bottom
+    val pullToRefreshState = rememberPullToRefreshState()
+
+    LaunchedEffect(pullToRefreshState.isRefreshing) {
+        if (pullToRefreshState.isRefreshing) {
+            userListViewModel.refreshUsers()
+            pullToRefreshState.endRefresh()
+        }
+    }
+
     LaunchedEffect(lazyListState) {
         snapshotFlow { lazyListState.layoutInfo.visibleItemsInfo }
             .collect { visibleItems ->
@@ -49,9 +62,16 @@ fun UserListScreen(modifier: Modifier = Modifier) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .padding(24.dp),
+            .padding(24.dp)
+            .nestedScroll(pullToRefreshState.nestedScrollConnection),
         contentAlignment = Alignment.Center
     ) {
+        if (pullToRefreshState.isRefreshing) {
+            PullToRefreshContainer(
+                state = pullToRefreshState,
+                modifier = Modifier.align(Alignment.TopCenter)
+            )
+        }
         when (val state = userListState) {
             is UserListUiState.Loading -> {
                 CircularProgressIndicator()

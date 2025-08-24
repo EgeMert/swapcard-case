@@ -29,6 +29,12 @@ class UserListViewModel @Inject constructor(
         getUsers()
     }
 
+    fun refreshUsers() {
+        currentPage = 1
+        isLastPage = false
+        getUsers()
+    }
+
     fun getUsers() {
         if (isLoading || isLastPage) return
 
