@@ -22,6 +22,7 @@ import androidx.compose.material3.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.pulltorefresh.PullToRefreshContainer
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
@@ -32,11 +33,14 @@ import androidx.compose.runtime.remember
 import kotlinx.coroutines.runBlocking
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.egemert.swapcardcase.R
 import com.egemert.swapcardcase.component.UserCardItem
 import com.egemert.swapcardcase.navigation.Router
 import com.egemert.swapcardcase.viewmodel.UserListUiState
@@ -90,14 +94,14 @@ fun UserListScreen(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = "Users",
+                text = stringResource(R.string.users),
                 style = MaterialTheme.typography.headlineSmall,
                 modifier = Modifier.weight(1f)
             )
             Icon(
-                imageVector = Icons.Default.Favorite,
+                imageVector = Icons.Default.Star,
                 contentDescription = "Favorites",
-                tint = MaterialTheme.colorScheme.primary,
+                tint = Color(0xFFFFD700),
                 modifier = Modifier
                     .size(28.dp)
                     .clickable {
