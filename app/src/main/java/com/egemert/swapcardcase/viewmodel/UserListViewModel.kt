@@ -39,6 +39,8 @@ class UserListViewModel @Inject constructor(
                 userRepository.getBookmarkedUsers().collectLatest { users ->
                     if (users.isNotEmpty()) {
                         bookmarkedUserList = users.toMutableList()
+                    }else{
+                        bookmarkedUserList = emptyList<User>().toMutableList()
                     }
                 }
             } catch (_: Exception) {
