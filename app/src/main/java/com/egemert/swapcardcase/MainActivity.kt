@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import com.egemert.swapcardcase.screen.UserListScreen
 import com.egemert.swapcardcase.ui.theme.SwapCardCaseTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,7 +22,10 @@ class MainActivity : ComponentActivity() {
             SwapCardCaseTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     UserListScreen(
-                        modifier = Modifier.padding(innerPadding)
+                        modifier = Modifier
+                            .padding(innerPadding)
+                            .fillMaxSize()
+                            .padding(8.dp)
                     )
                 }
             }

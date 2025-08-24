@@ -60,9 +60,7 @@ fun UserListScreen(modifier: Modifier = Modifier) {
     }
 
     Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(24.dp)
+        modifier = modifier
             .nestedScroll(pullToRefreshState.nestedScrollConnection),
         contentAlignment = Alignment.Center
     ) {
