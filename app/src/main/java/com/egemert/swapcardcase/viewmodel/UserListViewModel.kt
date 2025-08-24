@@ -11,6 +11,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -25,14 +26,50 @@ class UserListViewModel @Inject constructor(
     private var isLoading = false
     private var isLastPage = false
 
+    private var bookmarkedUserList = mutableListOf<User>()
+
     init {
         getUsers()
+        loadBookmarkedUsers()
+    }
+
+    private fun loadBookmarkedUsers() {
+        viewModelScope.launch {
+            try {
+                userRepository.getBookmarkedUsers().collectLatest { users ->
+                    if (users.isNotEmpty()) {
+                        bookmarkedUserList = users.toMutableList()
+                    }
+                }
+            } catch (_: Exception) {
+
+            }
+        }
     }
 
     fun refreshUsers() {
         currentPage = 1
         isLastPage = false
         getUsers()
+    }
+
+    fun isBookmarked(uuid: String): Boolean {
+        return bookmarkedUserList.any { user ->
+            user.login?.uuid == uuid
+        }
+    }
+
+    fun toggleBookmark(user: User) {
+        viewModelScope.launch {
+            val uuid = user.login?.uuid ?: return@launch
+            
+            if (isBookmarked(uuid)) {
+                userRepository.removeBookmark(user)
+            } else {
+                userRepository.addBookmark(user)
+            }
+            loadBookmarkedUsers()
+        }
     }
 
     fun getUsers() {

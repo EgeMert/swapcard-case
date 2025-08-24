@@ -26,7 +26,10 @@ import androidx.compose.material3.pulltorefresh.PullToRefreshContainer
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import kotlinx.coroutines.runBlocking
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -135,8 +138,11 @@ fun UserListScreen(
                             ) { user ->
                                 UserCardItem(
                                     user = user,
-                                    onBookmarkClick = {
-
+                                    onBookmarkClick = { isBookmarked ->
+                                        userListViewModel.toggleBookmark(user)
+                                    },
+                                    isBookmarked = remember(user.login?.uuid) {
+                                        runBlocking { userListViewModel.isBookmarked(user.login?.uuid.orEmpty()) }
                                     }
                                 )
                             }
