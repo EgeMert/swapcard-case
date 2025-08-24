@@ -1,5 +1,7 @@
 package com.egemert.swapcardcase.network
 
+import com.egemert.swapcardcase.data.error.ApiErrorResponse
+import com.google.gson.Gson
 import retrofit2.HttpException
 import retrofit2.Response
 
@@ -38,10 +40,24 @@ suspend fun <T : Any> handleApi(
         if (response.isSuccessful && body != null) {
             ApiSuccess(body)
         } else {
-            ApiError(message = response.message())
+            val errorBody = response.errorBody()?.string()
+            val errorMessage = try {
+                Gson().fromJson(errorBody, ApiErrorResponse::class.java)?.error
+                    ?: response.message()
+            } catch (e: Exception) {
+                response.message()
+            }
+            ApiError(message = errorMessage.ifEmpty { "An unknown error occurred" })
         }
     } catch (e: HttpException) {
-        ApiError(message = e.message())
+        val errorResponse = e.response()?.errorBody()?.string()
+        val errorMessage = try {
+            Gson().fromJson(errorResponse, ApiErrorResponse::class.java)?.error
+                ?: e.message()
+        } catch (e: Exception) {
+            e.message
+        }
+        ApiError(message = errorMessage ?: "An unknown error occurred")
     } catch (e: Throwable) {
         ApiException(e)
     }
