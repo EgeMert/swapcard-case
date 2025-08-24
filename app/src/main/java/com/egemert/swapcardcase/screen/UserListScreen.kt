@@ -26,6 +26,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.egemert.swapcardcase.component.UserCardItem
 import com.egemert.swapcardcase.viewmodel.UserListUiState
 import com.egemert.swapcardcase.viewmodel.UserListViewModel
 
@@ -82,7 +83,7 @@ fun UserListScreen(modifier: Modifier = Modifier) {
                     LazyColumn(
                         state = lazyListState,
                         modifier = Modifier.fillMaxSize(),
-                        verticalArrangement = Arrangement.spacedBy(8.dp),
+                        verticalArrangement = Arrangement.spacedBy(12.dp),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         items(
@@ -92,13 +93,9 @@ fun UserListScreen(modifier: Modifier = Modifier) {
                                     ?: (user.name?.title + user.name?.first + user.name?.last)
                             }
                         ) { user ->
-                            Text(
-                                text = user.email ?: "No email",
-                                style = MaterialTheme.typography.bodyLarge,
-                                modifier = Modifier
-                                    .padding(16.dp)
-                                    .fillParentMaxWidth(),
-                                textAlign = TextAlign.Center
+                            UserCardItem(
+                                user = user,
+                                onBookmarkClick = {}
                             )
                         }
 

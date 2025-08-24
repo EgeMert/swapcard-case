@@ -70,6 +70,9 @@ okhttp-logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-i
 coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
 coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
 
+# Coil
+coil = { group = "io.coil-kt", name = "coil-compose", version = "2.6.0" }
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
