@@ -27,12 +27,16 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.egemert.swapcardcase.component.UserCardItem
+import com.egemert.swapcardcase.navigation.Router
 import com.egemert.swapcardcase.viewmodel.UserListUiState
 import com.egemert.swapcardcase.viewmodel.UserListViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun UserListScreen(modifier: Modifier = Modifier) {
+fun UserListScreen(
+    modifier: Modifier = Modifier,
+    router: Router
+) {
     val userListViewModel: UserListViewModel = hiltViewModel()
     val userListState by userListViewModel.userListState.collectAsStateWithLifecycle()
     val lazyListState = rememberLazyListState()
@@ -95,7 +99,9 @@ fun UserListScreen(modifier: Modifier = Modifier) {
                         ) { user ->
                             UserCardItem(
                                 user = user,
-                                onBookmarkClick = {}
+                                onBookmarkClick = {
+                                    router.goToBookmarkScreen()
+                                }
                             )
                         }
 
